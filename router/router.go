@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"robot-go/handler"
+	"robot-demo/handler"
 )
 
 // SetupRouter 初始化路由

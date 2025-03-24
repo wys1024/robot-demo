@@ -1,4 +1,4 @@
-module robot-go
+module robot-demo
 
 go 1.23.2
 

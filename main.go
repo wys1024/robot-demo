@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"robot-go/router"
-	"robot-go/service"
+	"robot-demo/router"
+	"robot-demo/service"
 )
 
 func main() {

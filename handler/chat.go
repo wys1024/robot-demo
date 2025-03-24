@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/tmc/langchaingo/llms"
-	"robot-go/service"
+	"robot-demo/service"
 )
 
 // ChatHandler 处理聊天请求
