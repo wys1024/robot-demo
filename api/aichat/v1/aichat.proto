@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package aichat.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "robot-demo/api/aichat/v1;v1";
+
+// Chat服务定义
+service Aichat {
+  // SendMessage 发送聊天消息
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse) {
+    option (google.api.http) = {
+      post: "/api/chat"
+      body: "*"
+    };
+  }
+}
+
+// 发送消息请求
+message SendMessageRequest {
+  string question = 1;
+}
+
+// 发送消息响应
+message SendMessageResponse {
+  string answer = 1;
+}
