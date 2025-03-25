@@ -1,0 +1,7 @@
+server:
+  port: "9527"
+  mode: "debug"
+
+llm:
+  model: "qwen2:7b"
+  api_host: "http://localhost:11434"

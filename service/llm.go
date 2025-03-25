@@ -9,9 +9,18 @@ import (
 var LLMClient *ollama.LLM
 
 // InitLLM 初始化LLM客户端
-func InitLLM() error {
+func InitLLM(model string, apiHost string) error {
 	var err error
-	LLMClient, err = ollama.New(ollama.WithModel("qwen2:7b"))
+	options := []ollama.Option{
+		ollama.WithModel(model),
+	}
+
+	// 如果提供了API主机地址，则使用它
+	if apiHost != "" {
+		options = append(options, ollama.WithServerURL(apiHost))
+	}
+
+	LLMClient, err = ollama.New(options...)
 	if err != nil {
 		return fmt.Errorf("failed to initialize LLM: %v", err)
 	}
