@@ -3,8 +3,42 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: Aichat API
+    description: Chat服务定义
     version: 0.0.1
-paths: {}
+paths:
+    /api/chat:
+        post:
+            tags:
+                - Aichat
+            description: SendMessage 发送聊天消息
+            operationId: Aichat_SendMessage
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/aichat.v1.SendMessageRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/aichat.v1.SendMessageResponse'
 components:
-    schemas: {}
+    schemas:
+        aichat.v1.SendMessageRequest:
+            type: object
+            properties:
+                question:
+                    type: string
+            description: 发送消息请求
+        aichat.v1.SendMessageResponse:
+            type: object
+            properties:
+                answer:
+                    type: string
+            description: 发送消息响应
+tags:
+    - name: Aichat

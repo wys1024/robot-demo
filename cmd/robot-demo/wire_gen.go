@@ -30,7 +30,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	}
 	aichatRepo := data.NewAichatRepo(dataData, logger)
 	aichatUsecase := biz.NewAichatUsecase(aichatRepo, logger)
-	aichatService := service.NewAichatService(aichatUsecase)
+	aichatService := service.NewAichatService(aichatUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, aichatService, logger)
 	httpServer := server.NewHTTPServer(confServer, aichatService, logger)
 	app := newApp(logger, grpcServer, httpServer)

@@ -2,65 +2,67 @@ package service
 
 import (
 	"context"
-	"fmt"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tmc/langchaingo/llms"
-	"github.com/tmc/langchaingo/llms/ollama"
 	pb "robot-demo/api/aichat/v1"
 	"robot-demo/internal/biz"
-	"robot-demo/internal/conf"
+
+	"github.com/go-kratos/kratos/v2/log"
 )
 
 // ChatService 聊天服务
 type AichatService struct {
 	pb.UnimplementedAichatServer
-	llm  *ollama.LLM
-	chat *biz.AichatUsecase
-	log  *log.Helper
+	aiChat *biz.AichatUsecase
+	log    *log.Helper
 }
 
-func NewAichatService(chat *biz.AichatUsecase) *AichatService {
+func NewAichatService(aiChat *biz.AichatUsecase, logger log.Logger) *AichatService {
 	return &AichatService{
-		chat: chat,
-		log:  log.NewHelper(log.With(logger, "module", "service/aichat")),
+		aiChat: aiChat,
+		log:    log.NewHelper(log.With(logger, "module", "service/aichat")),
 	}
-}
-
-// InitLLM 初始化LLM客户端
-func (s *AichatService) InitLLM(model string, apiHost string) error {
-	var err error
-	options := []ollama.Option{
-		ollama.WithModel(model),
-	}
-
-	if apiHost != "" {
-		options = append(options, ollama.WithServerURL(apiHost))
-	}
-
-	s.llm, err = ollama.New(options...)
-	if err != nil {
-		return fmt.Errorf("failed to initialize LLM: %v", err)
-	}
-	return nil
 }
 
 // SendMessage 实现聊天消息发送接口
 func (s *AichatService) SendMessage(ctx context.Context, req *pb.SendMessageRequest) (*pb.SendMessageResponse, error) {
 	s.log.WithContext(ctx).Infof("Received question: %s", req.Question)
 
-	// 初始化llm客户端
-	if err := s.InitLLM(conf., conf.); err != nil {
-		s.log.Errorf("Failed to initialize LLM: %v", err)
-		return nil, err
+	// 创建一个channel用于接收流式响应
+	responseChan := make(chan string, 100)
+	errChan := make(chan error, 1)
+
+	// 异步调用流式生成
+	go func() {
+		err := s.aiChat.SendMessage(ctx, req.Question, func(ctx context.Context, chunk []byte) error {
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case responseChan <- string(chunk):
+				return nil
+			}
+		})
+		if err != nil {
+			errChan <- err
+		}
+		close(responseChan)
+	}()
+
+	// 收集所有响应
+	var fullResponse string
+	for {
+		select {
+		case chunk, ok := <-responseChan:
+			if !ok {
+				// 通道已关闭，发送完整响应
+				return &pb.SendMessageResponse{
+					Answer: fullResponse,
+				}, nil
+			}
+			fullResponse += chunk
+		case err := <-errChan:
+			s.log.Errorf("Failed to generate response: %v", err)
+			return nil, err
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		}
 	}
-
-	content := []llms.MessageContent{
-		llms.TextParts(llms.ChatMessageTypeHuman, req.Question),
-	}
-
-	completion, err := s.chat.SendMessage(ctx, content)
-
-	return &pb.SendMessageResponse{
-		Answer: completion.Choices[0].Content,
-	}, nil
 }
