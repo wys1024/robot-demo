@@ -21,7 +21,6 @@ type AichatUsecase struct {
 
 // NewChat 创建聊天业务逻辑实例
 func NewAichatUsecase(repo AichatRepo, logger log.Logger) *AichatUsecase {
-	// TODO: 修复bug
 	c := conf.Llm{}
 	llm, err := ollama.New(ollama.WithModel(c.GetModel()), ollama.WithServerURL(c.GetApiHost()))
 	if err != nil {

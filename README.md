@@ -11,7 +11,7 @@
 
 ## 技术栈
 
-- 后端：Go + + LangChainGo + Gin框架
+- 后端：Go + Kratos框架
 - AI模型：Ollama (qwen2:7b)
 - 前端：原生JavaScript + SSE
 
@@ -25,7 +25,7 @@
 
 1. 克隆项目
 ```bash
-git clone https://github.com/seaung/robot-go.git
+git clone git@github.com:wys1024/robot-demo.git
 cd robot-demo
 ```
 
@@ -34,19 +34,19 @@ cd robot-demo
 go mod tidy
 ```
 
+
 3. 运行项目
 ```bash
-go run main.go
+kratos run
 ```
 
-默认情况下，服务器将在 http://localhost:9527 启动
+默认情况下，服务器将在 http://localhost:9000 启动
 
 ## 配置说明
 
 可以通过环境变量配置以下参数：
 
-- `PORT`: 服务器端口号（默认：9527）
-- `GIN_MODE`: Gin框架运行模式（可选：debug/release）
+- `PORT`: 服务器端口号（默认：9000）
 
 ## API接口
 
@@ -64,7 +64,7 @@ go run main.go
 ## 使用说明
 
 1. 确保Ollama服务正在运行，并已下载qwen2:7b模型(也可以是其他模型)
-2. 启动服务后，访问 http://localhost:9527
+2. 启动服务后，访问 http://localhost:9000
 3. 在输入框中输入问题，点击发送按钮或按回车键发送
 4. 等待AI助手的实时回复
 
@@ -75,4 +75,3 @@ go run main.go
 - 建议在本地网络环境良好的情况下使用
 
 ---
-that's all
