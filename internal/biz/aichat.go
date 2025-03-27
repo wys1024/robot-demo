@@ -3,16 +3,25 @@ package biz
 import (
 	"context"
 	"robot-demo/internal/conf"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/tmc/langchaingo/llms"
 	"github.com/tmc/langchaingo/llms/ollama"
 )
 
-type AichatRepo interface {
-	// 定义与AichatRepo相关的方法
-
+type Aichat struct {
+	Id        int
+	Model     string
+	Questions string
+	Answers   string
+	Time      time.Time
 }
+
+type AichatRepo interface {
+	Save(ctx context.Context, aichat *Aichat) (*Aichat, error)
+}
+
 type AichatUsecase struct {
 	repo AichatRepo
 	llm  *ollama.LLM
@@ -47,7 +56,7 @@ func (c *AichatUsecase) SendMessage(ctx context.Context, content string, streamC
 	}
 
 	// 调用LLM生成内容，传入流式回调函数
-	_, err := c.llm.GenerateContent(
+	generateContent, err := c.llm.GenerateContent(
 		ctx,
 		msgContent,
 		llms.WithStreamingFunc(streamCallback), // 使用相同的流式参数
@@ -55,6 +64,18 @@ func (c *AichatUsecase) SendMessage(ctx context.Context, content string, streamC
 
 	if err != nil {
 		c.log.Errorf("生成内容失败: %v", err)
+		return err
+	}
+
+	// 写入数据库
+	_, err = c.repo.Save(ctx, &Aichat{
+		Model:     "qwen2:7b",
+		Questions: content,
+		Answers:   generateContent.Choices[0].Content,
+		Time:      time.Now(),
+	})
+	if err != nil {
+		c.log.Errorf("写入数据库失败: %v", err)
 		return err
 	}
 
