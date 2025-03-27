@@ -7,7 +7,7 @@ info:
     description: Chat服务定义
     version: 0.0.1
 paths:
-    /api/chat:
+    /api/aiChat/sendMessage:
         post:
             tags:
                 - Aichat

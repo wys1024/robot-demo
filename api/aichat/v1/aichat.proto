@@ -11,7 +11,7 @@ service Aichat {
   // SendMessage 发送聊天消息
   rpc SendMessage (SendMessageRequest) returns (SendMessageResponse) {
     option (google.api.http) = {
-      post: "/api/chat"
+      post: "/api/aiChat/sendMessage"
       body: "*"
     };
   }

@@ -28,7 +28,7 @@ type AichatHTTPServer interface {
 
 func RegisterAichatHTTPServer(s *http.Server, srv AichatHTTPServer) {
 	r := s.Route("/")
-	r.POST("/api/chat", _Aichat_SendMessage0_HTTP_Handler(srv))
+	r.POST("/api/aiChat/sendMessage", _Aichat_SendMessage0_HTTP_Handler(srv))
 }
 
 func _Aichat_SendMessage0_HTTP_Handler(srv AichatHTTPServer) func(ctx http.Context) error {
@@ -67,7 +67,7 @@ func NewAichatHTTPClient(client *http.Client) AichatHTTPClient {
 
 func (c *AichatHTTPClientImpl) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...http.CallOption) (*SendMessageResponse, error) {
 	var out SendMessageResponse
-	pattern := "/api/chat"
+	pattern := "/api/aiChat/sendMessage"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAichatSendMessage))
 	opts = append(opts, http.PathTemplate(pattern))

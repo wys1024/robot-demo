@@ -23,13 +23,13 @@ import (
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
+func wireApp(confServer *conf.Server, confData *conf.Data, llm *conf.Llm, logger log.Logger) (*kratos.App, func(), error) {
 	dataData, cleanup, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, nil, err
 	}
 	aichatRepo := data.NewAichatRepo(dataData, logger)
-	aichatUsecase := biz.NewAichatUsecase(aichatRepo, logger)
+	aichatUsecase := biz.NewAichatUsecase(aichatRepo, llm, logger)
 	aichatService := service.NewAichatService(aichatUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, aichatService, logger)
 	httpServer := server.NewHTTPServer(confServer, aichatService, logger)

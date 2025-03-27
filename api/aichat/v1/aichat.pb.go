@@ -120,9 +120,9 @@ const file_aichat_v1_aichat_proto_rawDesc = "" +
 	"\x12SendMessageRequest\x12\x1a\n" +
 	"\bquestion\x18\x01 \x01(\tR\bquestion\"-\n" +
 	"\x13SendMessageResponse\x12\x16\n" +
-	"\x06answer\x18\x01 \x01(\tR\x06answer2l\n" +
-	"\x06Aichat\x12b\n" +
-	"\vSendMessage\x12\x1d.aichat.v1.SendMessageRequest\x1a\x1e.aichat.v1.SendMessageResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/api/chatB\x1dZ\x1brobot-demo/api/aichat/v1;v1b\x06proto3"
+	"\x06answer\x18\x01 \x01(\tR\x06answer2z\n" +
+	"\x06Aichat\x12p\n" +
+	"\vSendMessage\x12\x1d.aichat.v1.SendMessageRequest\x1a\x1e.aichat.v1.SendMessageResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/aiChat/sendMessageB\x1dZ\x1brobot-demo/api/aichat/v1;v1b\x06proto3"
 
 var (
 	file_aichat_v1_aichat_proto_rawDescOnce sync.Once

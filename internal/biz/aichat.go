@@ -20,12 +20,15 @@ type AichatUsecase struct {
 }
 
 // NewChat 创建聊天业务逻辑实例
-func NewAichatUsecase(repo AichatRepo, logger log.Logger) *AichatUsecase {
-	c := conf.Llm{}
-	llm, err := ollama.New(ollama.WithModel(c.GetModel()), ollama.WithServerURL(c.GetApiHost()))
+func NewAichatUsecase(repo AichatRepo, conf *conf.Llm, logger log.Logger) *AichatUsecase {
+	llm, err := ollama.New(
+		ollama.WithModel(conf.Model),
+		ollama.WithServerURL(conf.ApiHost),
+	)
 	if err != nil {
 		return nil
 	}
+
 	return &AichatUsecase{
 		repo: repo,
 		llm:  llm,
