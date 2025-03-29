@@ -7,6 +7,7 @@ import (
 
 // SetupRouter 初始化路由
 func SetupRouter() *gin.Engine {
+	// 初始化gin引擎
 	r := gin.Default()
 
 	// 添加静态文件服务
