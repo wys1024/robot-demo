@@ -4,14 +4,8 @@ import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
 	"robot-demo/internal/biz"
+	"robot-demo/model"
 )
-
-type User struct {
-	//gorm.Model
-	ID           uint   `gorm:"primarykey"`
-	Username     string `gorm:"type:varchar(255);uniqueIndex"`
-	PasswordHash string `gorm:"type:varchar(255)"`
-}
 
 type userRepo struct {
 	data *Data
@@ -27,7 +21,7 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 
 // 创建新用户
 func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
-	user := User{
+	user := model.User{
 		Username:     u.Username,
 		PasswordHash: u.PasswordHash,
 	}
@@ -38,7 +32,7 @@ func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
 // 通过用户名查找用户
 
 func (r *userRepo) GetUserByusername(ctx context.Context, username string) (*biz.User, error) {
-	var user User
+	var user model.User
 	rv := r.data.db.Where("username = ?", username).First(&user)
 	if rv.Error != nil {
 		return nil, rv.Error
