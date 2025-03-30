@@ -19,16 +19,68 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationAichatLogin = "/aichat.v1.Aichat/Login"
+const OperationAichatRegister = "/aichat.v1.Aichat/Register"
 const OperationAichatSendMessage = "/aichat.v1.Aichat/SendMessage"
 
 type AichatHTTPServer interface {
+	// Login 登录
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	// Register 注册
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	// SendMessage SendMessage 发送聊天消息
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
 }
 
 func RegisterAichatHTTPServer(s *http.Server, srv AichatHTTPServer) {
 	r := s.Route("/")
+	r.POST("/api/aiChat/register", _Aichat_Register0_HTTP_Handler(srv))
+	r.POST("/api/aiChat/login", _Aichat_Login0_HTTP_Handler(srv))
 	r.POST("/api/aiChat/sendMessage", _Aichat_SendMessage0_HTTP_Handler(srv))
+}
+
+func _Aichat_Register0_HTTP_Handler(srv AichatHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in RegisterRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAichatRegister)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Register(ctx, req.(*RegisterRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*RegisterResponse)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _Aichat_Login0_HTTP_Handler(srv AichatHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in LoginRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAichatLogin)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Login(ctx, req.(*LoginRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*LoginResponse)
+		return ctx.Result(200, reply)
+	}
 }
 
 func _Aichat_SendMessage0_HTTP_Handler(srv AichatHTTPServer) func(ctx http.Context) error {
@@ -54,6 +106,8 @@ func _Aichat_SendMessage0_HTTP_Handler(srv AichatHTTPServer) func(ctx http.Conte
 }
 
 type AichatHTTPClient interface {
+	Login(ctx context.Context, req *LoginRequest, opts ...http.CallOption) (rsp *LoginResponse, err error)
+	Register(ctx context.Context, req *RegisterRequest, opts ...http.CallOption) (rsp *RegisterResponse, err error)
 	SendMessage(ctx context.Context, req *SendMessageRequest, opts ...http.CallOption) (rsp *SendMessageResponse, err error)
 }
 
@@ -63,6 +117,32 @@ type AichatHTTPClientImpl struct {
 
 func NewAichatHTTPClient(client *http.Client) AichatHTTPClient {
 	return &AichatHTTPClientImpl{client}
+}
+
+func (c *AichatHTTPClientImpl) Login(ctx context.Context, in *LoginRequest, opts ...http.CallOption) (*LoginResponse, error) {
+	var out LoginResponse
+	pattern := "/api/aiChat/login"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAichatLogin))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *AichatHTTPClientImpl) Register(ctx context.Context, in *RegisterRequest, opts ...http.CallOption) (*RegisterResponse, error) {
+	var out RegisterResponse
+	pattern := "/api/aiChat/register"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAichatRegister))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *AichatHTTPClientImpl) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...http.CallOption) (*SendMessageResponse, error) {

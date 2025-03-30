@@ -19,6 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	Aichat_Register_FullMethodName    = "/aichat.v1.Aichat/Register"
+	Aichat_Login_FullMethodName       = "/aichat.v1.Aichat/Login"
 	Aichat_SendMessage_FullMethodName = "/aichat.v1.Aichat/SendMessage"
 )
 
@@ -28,6 +30,10 @@ const (
 //
 // Chat服务定义
 type AichatClient interface {
+	// 注册
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	// 登录
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// SendMessage 发送聊天消息
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
 }
@@ -38,6 +44,26 @@ type aichatClient struct {
 
 func NewAichatClient(cc grpc.ClientConnInterface) AichatClient {
 	return &aichatClient{cc}
+}
+
+func (c *aichatClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RegisterResponse)
+	err := c.cc.Invoke(ctx, Aichat_Register_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aichatClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, Aichat_Login_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *aichatClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
@@ -56,6 +82,10 @@ func (c *aichatClient) SendMessage(ctx context.Context, in *SendMessageRequest, 
 //
 // Chat服务定义
 type AichatServer interface {
+	// 注册
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	// 登录
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// SendMessage 发送聊天消息
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
 	mustEmbedUnimplementedAichatServer()
@@ -68,6 +98,12 @@ type AichatServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAichatServer struct{}
 
+func (UnimplementedAichatServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedAichatServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
 func (UnimplementedAichatServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
@@ -90,6 +126,42 @@ func RegisterAichatServer(s grpc.ServiceRegistrar, srv AichatServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Aichat_ServiceDesc, srv)
+}
+
+func _Aichat_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AichatServer).Register(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Aichat_Register_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AichatServer).Register(ctx, req.(*RegisterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Aichat_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AichatServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Aichat_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AichatServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Aichat_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -117,6 +189,14 @@ var Aichat_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "aichat.v1.Aichat",
 	HandlerType: (*AichatServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Register",
+			Handler:    _Aichat_Register_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _Aichat_Login_Handler,
+		},
 		{
 			MethodName: "SendMessage",
 			Handler:    _Aichat_SendMessage_Handler,

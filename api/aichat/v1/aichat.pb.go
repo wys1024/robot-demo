@@ -22,6 +22,202 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// 注册请求
+type RegisterRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterRequest) Reset() {
+	*x = RegisterRequest{}
+	mi := &file_aichat_v1_aichat_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterRequest) ProtoMessage() {}
+
+func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_aichat_v1_aichat_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
+func (*RegisterRequest) Descriptor() ([]byte, []int) {
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *RegisterRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+// 注册响应
+type RegisterResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterResponse) Reset() {
+	*x = RegisterResponse{}
+	mi := &file_aichat_v1_aichat_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterResponse) ProtoMessage() {}
+
+func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_aichat_v1_aichat_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
+func (*RegisterResponse) Descriptor() ([]byte, []int) {
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *RegisterResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+// 登录请求
+type LoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRequest) Reset() {
+	*x = LoginRequest{}
+	mi := &file_aichat_v1_aichat_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRequest) ProtoMessage() {}
+
+func (x *LoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_aichat_v1_aichat_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LoginRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+// 登录响应
+type LoginResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginResponse) Reset() {
+	*x = LoginResponse{}
+	mi := &file_aichat_v1_aichat_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginResponse) ProtoMessage() {}
+
+func (x *LoginResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_aichat_v1_aichat_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
+func (*LoginResponse) Descriptor() ([]byte, []int) {
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *LoginResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
 // 发送消息请求
 type SendMessageRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -32,7 +228,7 @@ type SendMessageRequest struct {
 
 func (x *SendMessageRequest) Reset() {
 	*x = SendMessageRequest{}
-	mi := &file_aichat_v1_aichat_proto_msgTypes[0]
+	mi := &file_aichat_v1_aichat_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +240,7 @@ func (x *SendMessageRequest) String() string {
 func (*SendMessageRequest) ProtoMessage() {}
 
 func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_aichat_v1_aichat_proto_msgTypes[0]
+	mi := &file_aichat_v1_aichat_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +253,7 @@ func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessageRequest.ProtoReflect.Descriptor instead.
 func (*SendMessageRequest) Descriptor() ([]byte, []int) {
-	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{0}
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SendMessageRequest) GetQuestion() string {
@@ -77,7 +273,7 @@ type SendMessageResponse struct {
 
 func (x *SendMessageResponse) Reset() {
 	*x = SendMessageResponse{}
-	mi := &file_aichat_v1_aichat_proto_msgTypes[1]
+	mi := &file_aichat_v1_aichat_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -89,7 +285,7 @@ func (x *SendMessageResponse) String() string {
 func (*SendMessageResponse) ProtoMessage() {}
 
 func (x *SendMessageResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_aichat_v1_aichat_proto_msgTypes[1]
+	mi := &file_aichat_v1_aichat_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -102,7 +298,7 @@ func (x *SendMessageResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessageResponse.ProtoReflect.Descriptor instead.
 func (*SendMessageResponse) Descriptor() ([]byte, []int) {
-	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{1}
+	return file_aichat_v1_aichat_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SendMessageResponse) GetAnswer() string {
@@ -116,12 +312,24 @@ var File_aichat_v1_aichat_proto protoreflect.FileDescriptor
 
 const file_aichat_v1_aichat_proto_rawDesc = "" +
 	"\n" +
-	"\x16aichat/v1/aichat.proto\x12\taichat.v1\x1a\x1cgoogle/api/annotations.proto\"0\n" +
+	"\x16aichat/v1/aichat.proto\x12\taichat.v1\x1a\x1cgoogle/api/annotations.proto\"I\n" +
+	"\x0fRegisterRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"(\n" +
+	"\x10RegisterResponse\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"F\n" +
+	"\fLoginRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"%\n" +
+	"\rLoginResponse\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"0\n" +
 	"\x12SendMessageRequest\x12\x1a\n" +
 	"\bquestion\x18\x01 \x01(\tR\bquestion\"-\n" +
 	"\x13SendMessageResponse\x12\x16\n" +
-	"\x06answer\x18\x01 \x01(\tR\x06answer2z\n" +
-	"\x06Aichat\x12p\n" +
+	"\x06answer\x18\x01 \x01(\tR\x06answer2\xba\x02\n" +
+	"\x06Aichat\x12d\n" +
+	"\bRegister\x12\x1a.aichat.v1.RegisterRequest\x1a\x1b.aichat.v1.RegisterResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/aiChat/register\x12X\n" +
+	"\x05Login\x12\x17.aichat.v1.LoginRequest\x1a\x18.aichat.v1.LoginResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/api/aiChat/login\x12p\n" +
 	"\vSendMessage\x12\x1d.aichat.v1.SendMessageRequest\x1a\x1e.aichat.v1.SendMessageResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/aiChat/sendMessageB\x1dZ\x1brobot-demo/api/aichat/v1;v1b\x06proto3"
 
 var (
@@ -136,16 +344,24 @@ func file_aichat_v1_aichat_proto_rawDescGZIP() []byte {
 	return file_aichat_v1_aichat_proto_rawDescData
 }
 
-var file_aichat_v1_aichat_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_aichat_v1_aichat_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_aichat_v1_aichat_proto_goTypes = []any{
-	(*SendMessageRequest)(nil),  // 0: aichat.v1.SendMessageRequest
-	(*SendMessageResponse)(nil), // 1: aichat.v1.SendMessageResponse
+	(*RegisterRequest)(nil),     // 0: aichat.v1.RegisterRequest
+	(*RegisterResponse)(nil),    // 1: aichat.v1.RegisterResponse
+	(*LoginRequest)(nil),        // 2: aichat.v1.LoginRequest
+	(*LoginResponse)(nil),       // 3: aichat.v1.LoginResponse
+	(*SendMessageRequest)(nil),  // 4: aichat.v1.SendMessageRequest
+	(*SendMessageResponse)(nil), // 5: aichat.v1.SendMessageResponse
 }
 var file_aichat_v1_aichat_proto_depIdxs = []int32{
-	0, // 0: aichat.v1.Aichat.SendMessage:input_type -> aichat.v1.SendMessageRequest
-	1, // 1: aichat.v1.Aichat.SendMessage:output_type -> aichat.v1.SendMessageResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // 0: aichat.v1.Aichat.Register:input_type -> aichat.v1.RegisterRequest
+	2, // 1: aichat.v1.Aichat.Login:input_type -> aichat.v1.LoginRequest
+	4, // 2: aichat.v1.Aichat.SendMessage:input_type -> aichat.v1.SendMessageRequest
+	1, // 3: aichat.v1.Aichat.Register:output_type -> aichat.v1.RegisterResponse
+	3, // 4: aichat.v1.Aichat.Login:output_type -> aichat.v1.LoginResponse
+	5, // 5: aichat.v1.Aichat.SendMessage:output_type -> aichat.v1.SendMessageResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -162,7 +378,7 @@ func file_aichat_v1_aichat_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_aichat_v1_aichat_proto_rawDesc), len(file_aichat_v1_aichat_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

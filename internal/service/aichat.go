@@ -3,24 +3,7 @@ package service
 import (
 	"context"
 	pb "robot-demo/api/aichat/v1"
-	"robot-demo/internal/biz"
-
-	"github.com/go-kratos/kratos/v2/log"
 )
-
-// ChatService 聊天服务
-type AichatService struct {
-	pb.UnimplementedAichatServer
-	aiChat *biz.AichatUsecase
-	log    *log.Helper
-}
-
-func NewAichatService(aiChat *biz.AichatUsecase, logger log.Logger) *AichatService {
-	return &AichatService{
-		aiChat: aiChat,
-		log:    log.NewHelper(log.With(logger, "module", "service/aichat")),
-	}
-}
 
 // SendMessage 实现聊天消息发送接口
 func (s *AichatService) SendMessage(ctx context.Context, req *pb.SendMessageRequest) (*pb.SendMessageResponse, error) {

@@ -1,8 +1,11 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type Aichats struct {
+	//gorm.Model
 	Id        int       `gorm:"primaryKey"`
 	Model     string    `gorm:"type:varchar(255)"`
 	Questions string    `gorm:"type:text"`

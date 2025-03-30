@@ -9,6 +9,7 @@ message Bootstrap {
   Server server = 1;
   Data data = 2;
   Llm llm = 3;
+  JWT jwt = 4;
 }
 
 message Server {
@@ -44,4 +45,8 @@ message Data {
 message Llm {
   string model = 1;
   string api_host = 2;
+}
+
+message JWT {
+  string secret = 1;
 }

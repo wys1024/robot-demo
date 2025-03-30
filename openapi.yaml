@@ -7,6 +7,44 @@ info:
     description: Chat服务定义
     version: 0.0.1
 paths:
+    /api/aiChat/login:
+        post:
+            tags:
+                - Aichat
+            description: 登录
+            operationId: Aichat_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/aichat.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/aichat.v1.LoginResponse'
+    /api/aiChat/register:
+        post:
+            tags:
+                - Aichat
+            description: 注册
+            operationId: Aichat_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/aichat.v1.RegisterRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/aichat.v1.RegisterResponse'
     /api/aiChat/sendMessage:
         post:
             tags:
@@ -28,6 +66,34 @@ paths:
                                 $ref: '#/components/schemas/aichat.v1.SendMessageResponse'
 components:
     schemas:
+        aichat.v1.LoginRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+            description: 登录请求
+        aichat.v1.LoginResponse:
+            type: object
+            properties:
+                token:
+                    type: string
+            description: 登录响应
+        aichat.v1.RegisterRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+            description: 注册请求
+        aichat.v1.RegisterResponse:
+            type: object
+            properties:
+                token:
+                    type: string
+            description: 注册响应
         aichat.v1.SendMessageRequest:
             type: object
             properties:

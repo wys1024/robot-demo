@@ -46,9 +46,9 @@ func NewAichatUsecase(repo AichatRepo, conf *conf.Llm, logger log.Logger) *Aicha
 }
 
 // SendMessage 发送聊天消息
-func (c *AichatUsecase) SendMessage(ctx context.Context, content string, streamCallback func(ctx context.Context, chunk []byte) error) error {
+func (uc *AichatUsecase) SendMessage(ctx context.Context, content string, streamCallback func(ctx context.Context, chunk []byte) error) error {
 	// 记录日志
-	c.log.WithContext(ctx).Infof("收到问题: %s", content)
+	uc.log.WithContext(ctx).Infof("收到问题: %s", content)
 
 	// 按照ChatHandler的方式构造消息内容
 	msgContent := []llms.MessageContent{
@@ -56,26 +56,26 @@ func (c *AichatUsecase) SendMessage(ctx context.Context, content string, streamC
 	}
 
 	// 调用LLM生成内容，传入流式回调函数
-	generateContent, err := c.llm.GenerateContent(
+	generateContent, err := uc.llm.GenerateContent(
 		ctx,
 		msgContent,
 		llms.WithStreamingFunc(streamCallback), // 使用相同的流式参数
 	)
 
 	if err != nil {
-		c.log.Errorf("生成内容失败: %v", err)
+		uc.log.Errorf("生成内容失败: %v", err)
 		return err
 	}
 
 	// 写入数据库
-	_, err = c.repo.Save(ctx, &Aichat{
+	_, err = uc.repo.Save(ctx, &Aichat{
 		Model:     "qwen2:7b",
 		Questions: content,
 		Answers:   generateContent.Choices[0].Content,
 		Time:      time.Now(),
 	})
 	if err != nil {
-		c.log.Errorf("写入数据库失败: %v", err)
+		uc.log.Errorf("写入数据库失败: %v", err)
 		return err
 	}
 

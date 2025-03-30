@@ -16,3 +16,5 @@ data:
 llm:
   model: qwen2:7b
   api_host: http://localhost:11434
+jwt:
+  secret: "robot"

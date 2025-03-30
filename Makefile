@@ -26,7 +26,7 @@ init:
 	go install github.com/google/wire/cmd/wire@latest
 
 .PHONY: config
-# generate internal proto
+# generate internal proto 生成conf.pb.go文件
 config:
 	protoc --proto_path=./internal \
 	       --proto_path=./third_party \
@@ -50,7 +50,7 @@ build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
 .PHONY: generate
-# generate
+# generate 生成wire_gen文件
 generate:
 	go generate ./...
 	go mod tidy
