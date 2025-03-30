@@ -27,7 +27,7 @@ type Bootstrap struct {
 	Server        *Server                `protobuf:"bytes,1,opt,name=server,proto3" json:"server,omitempty"`
 	Data          *Data                  `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	Llm           *Llm                   `protobuf:"bytes,3,opt,name=llm,proto3" json:"llm,omitempty"`
-	Jwt           *JWT                   `protobuf:"bytes,4,opt,name=jwt,proto3" json:"jwt,omitempty"`
+	Jwt           *Jwt                   `protobuf:"bytes,4,opt,name=jwt,proto3" json:"jwt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -83,7 +83,7 @@ func (x *Bootstrap) GetLlm() *Llm {
 	return nil
 }
 
-func (x *Bootstrap) GetJwt() *JWT {
+func (x *Bootstrap) GetJwt() *Jwt {
 	if x != nil {
 		return x.Jwt
 	}
@@ -246,27 +246,27 @@ func (x *Llm) GetApiHost() string {
 	return ""
 }
 
-type JWT struct {
+type Jwt struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Secret        string                 `protobuf:"bytes,1,opt,name=secret,proto3" json:"secret,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *JWT) Reset() {
-	*x = JWT{}
+func (x *Jwt) Reset() {
+	*x = Jwt{}
 	mi := &file_conf_conf_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *JWT) String() string {
+func (x *Jwt) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*JWT) ProtoMessage() {}
+func (*Jwt) ProtoMessage() {}
 
-func (x *JWT) ProtoReflect() protoreflect.Message {
+func (x *Jwt) ProtoReflect() protoreflect.Message {
 	mi := &file_conf_conf_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -278,12 +278,12 @@ func (x *JWT) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use JWT.ProtoReflect.Descriptor instead.
-func (*JWT) Descriptor() ([]byte, []int) {
+// Deprecated: Use Jwt.ProtoReflect.Descriptor instead.
+func (*Jwt) Descriptor() ([]byte, []int) {
 	return file_conf_conf_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *JWT) GetSecret() string {
+func (x *Jwt) GetSecret() string {
 	if x != nil {
 		return x.Secret
 	}
@@ -540,7 +540,7 @@ const file_conf_conf_proto_rawDesc = "" +
 	"\x06server\x18\x01 \x01(\v2\x12.kratos.api.ServerR\x06server\x12$\n" +
 	"\x04data\x18\x02 \x01(\v2\x10.kratos.api.DataR\x04data\x12!\n" +
 	"\x03llm\x18\x03 \x01(\v2\x0f.kratos.api.LlmR\x03llm\x12!\n" +
-	"\x03jwt\x18\x04 \x01(\v2\x0f.kratos.api.JWTR\x03jwt\"\xb8\x02\n" +
+	"\x03jwt\x18\x04 \x01(\v2\x0f.kratos.api.JwtR\x03jwt\"\xb8\x02\n" +
 	"\x06Server\x12+\n" +
 	"\x04http\x18\x01 \x01(\v2\x17.kratos.api.Server.HTTPR\x04http\x12+\n" +
 	"\x04grpc\x18\x02 \x01(\v2\x17.kratos.api.Server.GRPCR\x04grpc\x1ai\n" +
@@ -566,7 +566,7 @@ const file_conf_conf_proto_rawDesc = "" +
 	"\x03Llm\x12\x14\n" +
 	"\x05model\x18\x01 \x01(\tR\x05model\x12\x19\n" +
 	"\bapi_host\x18\x02 \x01(\tR\aapiHost\"\x1d\n" +
-	"\x03JWT\x12\x16\n" +
+	"\x03Jwt\x12\x16\n" +
 	"\x06secret\x18\x01 \x01(\tR\x06secretB\x1fZ\x1drobot-demo/internal/conf;confb\x06proto3"
 
 var (
@@ -587,7 +587,7 @@ var file_conf_conf_proto_goTypes = []any{
 	(*Server)(nil),              // 1: kratos.api.Server
 	(*Data)(nil),                // 2: kratos.api.Data
 	(*Llm)(nil),                 // 3: kratos.api.Llm
-	(*JWT)(nil),                 // 4: kratos.api.JWT
+	(*Jwt)(nil),                 // 4: kratos.api.Jwt
 	(*Server_HTTP)(nil),         // 5: kratos.api.Server.HTTP
 	(*Server_GRPC)(nil),         // 6: kratos.api.Server.GRPC
 	(*Data_Database)(nil),       // 7: kratos.api.Data.Database
@@ -598,7 +598,7 @@ var file_conf_conf_proto_depIdxs = []int32{
 	1,  // 0: kratos.api.Bootstrap.server:type_name -> kratos.api.Server
 	2,  // 1: kratos.api.Bootstrap.data:type_name -> kratos.api.Data
 	3,  // 2: kratos.api.Bootstrap.llm:type_name -> kratos.api.Llm
-	4,  // 3: kratos.api.Bootstrap.jwt:type_name -> kratos.api.JWT
+	4,  // 3: kratos.api.Bootstrap.jwt:type_name -> kratos.api.Jwt
 	5,  // 4: kratos.api.Server.http:type_name -> kratos.api.Server.HTTP
 	6,  // 5: kratos.api.Server.grpc:type_name -> kratos.api.Server.GRPC
 	7,  // 6: kratos.api.Data.database:type_name -> kratos.api.Data.Database

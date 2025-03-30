@@ -3,9 +3,10 @@ package biz
 import (
 	"context"
 	"errors"
-	"github.com/go-kratos/kratos/v2/log"
 	"robot-demo/internal/conf"
 	auth "robot-demo/internal/pkg/middleware"
+
+	"github.com/go-kratos/kratos/v2/log"
 )
 
 type User struct {
@@ -26,11 +27,11 @@ type UserRepo interface {
 
 type UserUsecase struct {
 	repo UserRepo
-	jwtc *conf.JWT
+	jwtc *conf.Jwt
 	log  *log.Helper
 }
 
-func NewUserUsecase(repo UserRepo, jwtc *conf.JWT, logger log.Logger) *UserUsecase {
+func NewUserUsecase(repo UserRepo, jwtc *conf.Jwt, logger log.Logger) *UserUsecase {
 	return &UserUsecase{repo: repo, jwtc: jwtc, log: log.NewHelper(logger)}
 }
 
