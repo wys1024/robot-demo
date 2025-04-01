@@ -25,7 +25,15 @@ func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
 		Username:     u.Username,
 		PasswordHash: u.PasswordHash,
 	}
+	// 写入db
 	rv := r.data.db.Create(&user)
+
+	// 写入redis
+	set := r.data.redis.Set(ctx, "user:"+user.Username, user.ID, 0)
+	if set.Err() != nil {
+		return set.Err()
+	}
+
 	return rv.Error
 }
 
