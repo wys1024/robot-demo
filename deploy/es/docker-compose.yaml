@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: es
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false # 禁用安全认证（测试用）
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"

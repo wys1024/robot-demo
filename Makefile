@@ -62,6 +62,51 @@ all:
 	make config
 	make generate
 
+.PHONY: startredis
+# start redis
+startredis:
+	cd deploy/redis && docker-compose up -d
+
+.PHONY: startes
+# start es
+startes:
+	cd deploy/es && docker-compose up -d
+
+.PHONY: startkafka
+# start kafka
+startkafka:
+	cd deploy/kafka && docker-compose up -d
+
+.PHONY: startdockers
+# start all docker
+startdockers:
+	make startredis
+	make startes
+	make startkafka
+
+
+.PHONY: stopredis
+# stop redis
+stopredis:
+	cd deploy/redis && docker-compose stop
+
+.PHONY: stopes
+# stop es
+stopes:
+	cd deploy/es && docker-compose stop
+
+.PHONY: stopkafka
+# stop kafka
+stopkafka:
+	cd deploy/kafka && docker-compose stop
+
+.PHONY: stopdockers
+# start all docker
+stopdockers:
+	make stopredis
+	make stopes
+	make stopkafka
+
 # show help
 help:
 	@echo ''

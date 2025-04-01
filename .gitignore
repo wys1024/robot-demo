@@ -36,3 +36,6 @@ bin/
 .vscode/
 .idea/
 *.swp
+/deploy/es/es_data/
+/deploy/kafka/kafka_data/
+/deploy/redis/redis_data/
