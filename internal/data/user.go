@@ -2,9 +2,12 @@ package data
 
 import (
 	"context"
-	"github.com/go-kratos/kratos/v2/log"
 	"robot-demo/internal/biz"
 	"robot-demo/model"
+	"strconv"
+
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/segmentio/kafka-go"
 )
 
 type userRepo struct {
@@ -33,6 +36,34 @@ func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
 	if set.Err() != nil {
 		return set.Err()
 	}
+
+	// 写入kafka
+	err := r.data.kafkaProducer.WriteMessages(ctx,
+		kafka.Message{
+			Key:   []byte(user.Username),
+			Value: []byte(strconv.FormatUint(uint64(user.ID), 10)), // uint → string → []byte
+		},
+	)
+	if err != nil {
+		return err
+	}
+
+	// 读取kafka
+	m, err := r.data.kafkaConsumer.ReadMessage(ctx)
+	if err != nil {
+		return err
+	}
+
+	// 写入elasticsearch
+	_, err = r.data.esClient.Index().
+		Index("users").
+		BodyJson(user).
+		Do(ctx)
+	if err != nil {
+		return err
+	}
+
+	r.log.Infof("message at topic/partition/offset %v/%v/%v: %s\n", m.Topic, m.Partition, m.Offset, string(m.Value))
 
 	return rv.Error
 }

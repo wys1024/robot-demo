@@ -13,6 +13,16 @@ data:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
+  kafka:
+    brokers:
+      - "localhost:9092"
+    topic: "robot-demo"
+    group_id: "robot-demo-group"
+  elasticsearch:
+    addr:
+      - "localhost:9200"
+    index: "robot-demo"
+    timeout: 5s
 llm:
   model: qwen2:7b
   api_host: http://localhost:11434
