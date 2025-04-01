@@ -19,7 +19,7 @@ import (
 var ProviderSet = wire.NewSet(NewData, NewAichatRepo, NewUserRepo)
 
 // Data .
-// TODO: 增加redis、kafka、elasticsearch等连接
+// TODO: 检查是否在此增加redis、kafka、elasticsearch等连接
 type Data struct {
 	db            *gorm.DB
 	redis         *redis.Client
@@ -63,7 +63,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	})
 
 	// 初始化Elasticsearch客户端
-	// TODO: 增加ES连接
+	// TODO: ES连接有bug
 	esClient, err := elastic.NewClient(elastic.SetURL(c.Elasticsearch.Addr...))
 	if err != nil {
 		log.Errorf("failed opening connection to elasticsearch: %v", err)
