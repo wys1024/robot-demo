@@ -20,7 +20,7 @@ func (s *AichatService) Register(ctx context.Context, req *pb.RegisterRequest) (
 // Login 实现登录接口
 func (s *AichatService) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 	s.log.WithContext(ctx).Infof("Received username: %s", req.Username)
-	// TODO: Implement the Login function
+	//  TODO: Implement the Login function
 	return &pb.LoginResponse{
 		Token: "1234567890",
 	}, nil

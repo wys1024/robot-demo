@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"fmt"
 	"robot-demo/internal/biz"
 	"robot-demo/model"
 	"strconv"
@@ -49,9 +50,13 @@ func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
 	}
 
 	// 读取kafka
-	m, err := r.data.kafkaConsumer.ReadMessage(ctx)
-	if err != nil {
-		return err
+	for {
+		if m, err := r.data.kafkaConsumer.ReadMessage(ctx); err != nil {
+			break
+		} else {
+			fmt.Printf("从Kafka读取到消息: Topic=%v, Partition=%v, Offset=%v, Key=%s, Value=%s\n",
+				m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+		}
 	}
 
 	// 写入elasticsearch
@@ -62,9 +67,6 @@ func (r *userRepo) CreateUser(ctx context.Context, u *biz.User) error {
 	if err != nil {
 		return err
 	}
-
-	r.log.Infof("message at topic/partition/offset %v/%v/%v: %s\n", m.Topic, m.Partition, m.Offset, string(m.Value))
-
 	return rv.Error
 }
 

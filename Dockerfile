@@ -1,9 +1,9 @@
-FROM golang:1.19 AS builder
+FROM golang:1.23.2 AS builder
 
 COPY robot-demo /src
 WORKDIR /src
 
-RUN GOPROXY=https://goproxy.cn make build
+RUN GOPROXY=https://mirrors.aliyun.com/goproxy/,direct make build
 
 FROM debian:stable-slim
 
@@ -21,4 +21,4 @@ EXPOSE 8000
 EXPOSE 9000
 VOLUME /data/conf
 
-CMD ["./server", "-conf", "/data/conf"]
+CMD ["./robot-demo", "-conf", "/data/conf"]

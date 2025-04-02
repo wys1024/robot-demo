@@ -2,11 +2,11 @@ package data
 
 import (
 	"context"
+	"github.com/olivere/elastic/v7"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
-	"github.com/olivere/elastic/v7"
 	"github.com/segmentio/kafka-go"
 
 	"robot-demo/internal/conf"
@@ -19,7 +19,7 @@ import (
 var ProviderSet = wire.NewSet(NewData, NewAichatRepo, NewUserRepo)
 
 // Data .
-// TODO: 检查是否在此增加redis、kafka、elasticsearch等连接
+// TODO: 增加redis、kafka、elasticsearch等连接
 type Data struct {
 	db            *gorm.DB
 	redis         *redis.Client
@@ -63,10 +63,25 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	})
 
 	// 初始化Elasticsearch客户端
-	// TODO: ES连接有bug
-	esClient, err := elastic.NewClient(elastic.SetURL(c.Elasticsearch.Addr...))
+	esClient, err := elastic.NewClient(
+		elastic.SetURL(c.Elasticsearch.Addr...),
+		elastic.SetSniff(false),
+		elastic.SetHealthcheck(true),
+		elastic.SetHealthcheckTimeout(c.Elasticsearch.Timeout.AsDuration()),
+		elastic.SetRetrier(elastic.NewBackoffRetrier(elastic.NewExponentialBackoff(100, 5000))),
+	)
 	if err != nil {
 		log.Errorf("failed opening connection to elasticsearch: %v", err)
+		return nil, nil, err
+	}
+	
+	// 执行健康检查
+	ctx, cancel := context.WithTimeout(context.Background(), c.Elasticsearch.Timeout.AsDuration())
+	defer cancel()
+	
+	_, _, err = esClient.Ping(c.Elasticsearch.Addr[0]).Do(ctx)
+	if err != nil {
+		log.Errorf("elasticsearch health check failed: %v", err)
 		return nil, nil, err
 	}
 

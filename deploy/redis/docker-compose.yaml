@@ -4,7 +4,6 @@ services:
   redis:
     image: redis:latest # 使用官方镜像
     container_name: redis # 自定义容器名
-    restart: always # 容器退出时自动重启
     ports:
       - "6379:6379" # 映射端口（主机端口:容器端口）
     volumes:
